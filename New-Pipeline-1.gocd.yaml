@@ -1,0 +1,31 @@
+format_version: 10
+pipelines:
+  New-Pipeline-1:
+    group: My-Pipelines
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      Prowler:
+        git: https://github.com/khandelwaly/prowler
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - Stage-1:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          checkout:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - clone
+                - https://github.com/khandelwaly/prowler
+                command: git
+                run_if: passed
